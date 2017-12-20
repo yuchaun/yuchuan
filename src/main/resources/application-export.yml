@@ -1,0 +1,48 @@
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: update
+    generate-ddl: true
+    properties:
+      hibernate:
+        show_sql: true
+        dialect: org.hibernate.dialect.MySQLDialect
+  thymeleaf:
+    cache: false
+  resources:
+    static-locations: classpath:/templates/
+  datasource:
+    driverClassName: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/my_ctrip?useUnicode=true&amp;amp;characterEncoding=UTF-8
+    username: root
+    password: admin
+  redis:
+    pool:
+      maxIdle: 20
+      minIdle: 1
+      maxActive: 500
+      maxWait: 1000
+    port: 6379
+    password: my123456
+    node: redis193
+    host: 47.92.32.6
+logging:
+  file: D:/log/jltour.log
+  level: debug
+  root: INFO
+mybatis:
+  url: jdbc:mysql://localhost:3306/my_ctrip?useUnicode=true&amp;amp;characterEncoding=UTF-8
+  username: root
+  password: admin
+  driver: com.mysql.jdbc.Driver
+  mapperLocations: classpath:mappers/*.xml
+  alias: com.jltour.bean
+
+amap:
+    key: 04a50e70387a15fd41062f9ffe17114c
+    url: http://restapi.amap.com/v3/geocode/geo
+
+
+
+
+

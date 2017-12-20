@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jltour.mappers.HotelMapper">
+    <resultMap id="test" type="com.jltour.bean.Hotel" >
+        <result property="hotelName" column="hotel_name"></result>
+        <result property="cityName" column="city_name"></result>
+        <result property="cityCode" column="city_code"></result>
+    </resultMap>
+
+    <select id="findAll" resultMap="test">
+        SELECT city_code,hotel_name,city_name FROM  osii_hotel_info
+    </select>
+
+
+    <select id="selectProvinceNameList" resultType="com.jltour.bean.Hotel">
+        SELECT chd.city_name_cn cityName,chd.address address from ctrip_hotel_detail chd GROUP BY chd.city_name_cn
+        ORDER BY chd.city_code LIMIT ${start},${end}
+    </select>
+
+
+    <!-- 获取城市集合-->
+    <select id="selectCityNum" resultType="java.lang.Integer">
+        SELECT count(*) from ctrip_hotel_detail chd where city_name_cn = #{cityName}
+
+    </select>
+
+    <!-- 获取省份集合-->
+    <select id="selectProvinceNum" resultType="java.lang.Integer">
+
+    </select>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--    <select id="selectProvinceNameList" resultType="com.jltour.bean.Hotel">
+       SELECT dhd.city_name_cn cityName,t.provinceName from dida_hotel_detail dhd
+            INNER JOIN (
+            SELECT oc.`name` cityName,op.`name` provinceName  from osii_city oc
+            INNER JOIN osii_province op on op.id = oc.province_id and oc.province_id!=0
+            ) t on t.cityName = dhd.city_name_cn
+            GROUP BY cityName ORDER BY provinceName
+    </select>
+
+
+    &lt;!&ndash; 获取城市集合&ndash;&gt;
+    <select id="selectCityNum" resultType="java.lang.Integer">
+        SELECT count(*) from (
+SELECT dhd.city_name_cn cityName,t.provinceName from dida_hotel_detail dhd
+INNER JOIN (
+SELECT oc.`name` cityName,op.`name` provinceName  from osii_city oc
+INNER JOIN osii_province op on op.id = oc.province_id and oc.province_id!=0
+) t on t.cityName = dhd.city_name_cn
+)m where m.cityName =#{cityName}
+    </select>
+
+    &lt;!&ndash; 获取省份集合&ndash;&gt;
+    <select id="selectProvinceNum" resultType="java.lang.Integer">
+       SELECT count(*) from (
+SELECT dhd.city_name_cn cityName,t.provinceName from dida_hotel_detail dhd
+INNER JOIN (
+SELECT oc.`name` cityName,op.`name` provinceName  from osii_city oc
+INNER JOIN osii_province op on op.id = oc.province_id and oc.province_id!=0
+) t on t.cityName = dhd.city_name_cn
+)m where m.provinceName =#{provinceName}
+    </select>-->
+
+    <!--&lt;!&ndash;osii 获取省份集合&ndash;&gt;
+    <select id="selectProvinceNameList" resultType="com.jltour.bean.Hotel">
+        SELECT * from (
+            SELECT m.provinceName,oh2.city_name cityName from (
+            SELECT t.* from (
+            SELECT ohi.province_name provinceName,count(*) amount from osii_hotel_info ohi
+            INNER JOIN osii_province op on op.id=ohi.province_code
+            where ohi.pms_id !=2018 GROUP BY ohi.province_name
+            ) t ORDER BY amount DESC
+            )m LEFT JOIN osii_hotel_info oh2 on oh2.province_name = m.provinceName
+            ORDER BY provinceName
+            ) w  GROUP BY cityName ORDER BY provinceName
+    </select>
+
+
+    &lt;!&ndash;osii 获取城市集合&ndash;&gt;
+    <select id="selectCityNum" resultType="java.lang.Integer">
+        SELECT count(*) from osii_hotel_info ohi where ohi.city_name = #{cityName} and ohi.pms_id !=2018
+    </select>
+
+    &lt;!&ndash;osii 获取省份集合&ndash;&gt;
+    <select id="selectProvinceNum" resultType="java.lang.Integer">
+       SELECT count(*) from osii_hotel_info ohi where ohi.province_name = #{provinceName} and ohi.pms_id !=2018
+    </select>
+-->
+
+
+
+
+    <!--查找城市ID 及城市名称-->
+<!--    <select id="selectHomeByCityGroupHotel" resultType="com.jltour.bean.Hotel">
+
+            SELECT city_code cityCode,city_name cityName from (
+            SELECT ohi.city_name,ohi.city_code,count(*) amount from osii_hotel_info ohi
+            INNER JOIN osii_province op on op.id=ohi.province_code
+            where ohi.pms_id !=2018 GROUP BY ohi.city_code
+            ) t ORDER BY amount DESC,cityCode desc
+    </select>-->
+
+    <!--查找城市ID 及城市名称-->
+ <!--   <select id="selectHotelInfoByCitycode" parameterType="java.lang.String" resultType="com.jltour.bean.Hotel">
+        SELECT ohi.hotel_name hotelName ,ohi.city_name cityName,ohi.address address from osii_hotel_info ohi where ohi.city_code=#{cityCode} and ohi.pms_id !=2018
+    </select>-->
+
+
+</mapper>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jltour.mappers.TestModelMapper">
+    <resultMap id="test" type="com.jltour.bean.TestModel" >
+        <result property="id" column="id"></result>
+        <result property="name" column="name"></result>
+    </resultMap>
+    <!--<select id="findById" resultType="TestModel">
+        SELECT id,name FROM  test WHERE test.id = #{id}
+    </select>-->
+    <select id="findById" resultMap="test">
+        SELECT id,name FROM  test WHERE test.id = #{id}
+    </select>
+</mapper>
